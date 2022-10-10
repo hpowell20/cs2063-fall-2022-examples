@@ -31,7 +31,7 @@ internal class HttpGetTask(retainedFragment: RetainedFragment?) {
 
     private fun loadJsonFromUrl(): String? {
         var httpUrlConnection: HttpURLConnection? = null
-        return try {
+        try {
             // 1. Get connection. 2. Prepare request (URI)
             httpUrlConnection = URL(URL).openConnection() as HttpURLConnection
 
@@ -40,13 +40,13 @@ internal class HttpGetTask(retainedFragment: RetainedFragment?) {
             return convertStreamToString(`in`)
         } catch (exception: MalformedURLException) {
             Log.e(TAG, "MalformedURLException in loadJsonFromUrl; error: " + exception.localizedMessage)
-            null
+            return null
         } catch (exception: IOException) {
             Log.e(TAG, "IOException in loadJsonFromUrl; error: " + exception.localizedMessage)
-            null
+            return null
         } catch (e: Exception) {
             e.printStackTrace()
-            null
+            return null
         } finally {
             httpUrlConnection?.disconnect()
         }
